@@ -12,13 +12,13 @@
 source "$PLAYONLINUX/lib/sources"
 
 abort () {
-    POL_SetupWindow_message_image "The installation has been aborted." "Error" "$PLAYONLINUX/themes/tango/warning.png"
+    POL_SetupWindow_message_image "An error occurred, the installation is aborted." "$TITLE" "$PLAYONLINUX/themes/tango/warning.png"
     POL_SetupWindow_Close
     exit 1
 }
 
 check_install_archive () {
-#    POL_SetupWindow_wait_next_signal "Checking install archive..." "Outcast"
+    POL_SetupWindow_wait_next_signal "Checking install archive..." "$TITLE"
 
     EXPECTED_SIZE=1409323648
     EXPECTED_MD5="a8bf2336a580527f0eb99f8b90009c33"
@@ -26,16 +26,17 @@ check_install_archive () {
     SIZE="$(stat -c%s $APP_ANSWER)"
     MD5="$(md5sum $APP_ANSWER|cut -c1-32)"
 
-#    POL_SetupWindow_detect_exit
+    POL_SetupWindow_detect_exit
 
     if [ $SIZE != $EXPECTED_SIZE -o "$MD5" -ne "$EXPECTED_MD5" ]; then
-	POL_SetupWindow_message_image "Either your install archive is corrupted, or is not the expected version.\nThis script cannot guarantee that installation will work correctly. Please report success or failure to PlayOnLinux forums.\n\nSize: $SIZE (expected $EXPECTED_SIZE)\nMD5: $MD5 (expected $EXPECTED_MD5)" "Install archive mismatch" "$PLAYONLINUX/themes/tango/warning.png"
-	POL_SetupWindow_question "Continue?" "Install archive mismatch"
+	POL_SetupWindow_message_image "Install archive mismatch.\nEither your install archive is corrupted, or is not the expected version.\nThis script cannot guarantee that installation will work correctly. Please report success or failure to PlayOnLinux forums.\n\nSize: $SIZE (expected $EXPECTED_SIZE)\nMD5: $MD5 (expected $EXPECTED_MD5)" "$TITLE" "$PLAYONLINUX/themes/tango/warning.png"
+	POL_SetupWindow_question "Continue?" "$TITLE"
 	[ "$APP_ANSWER" -ne "TRUE" ] && abort
     fi
 }
 
 
+TITLE="Outcast (GoG release)"
 PREFIX="Outcast-gog"
 SHORTCUT_NAME="Outcast"
 WORKING_WINE_VERSION="1.3.27-rawinput2"
@@ -56,7 +57,7 @@ POL_SetupWindow_install_wine "$WORKING_WINE_VERSION"
 Use_WineVersion "$WORKING_WINE_VERSION"
 
 
-POL_SetupWindow_wait_next_signal "Installing Outcast..." "Outcast"
+POL_SetupWindow_wait_next_signal "Installing Outcast..." "$TITLE"
 
 # Associate .PDF with native app 
 # http://wiki.winehq.org/FAQ#head-91bf3f0a8ccbfab8dee96f82fae2f1a489e0d243
