@@ -98,6 +98,8 @@ POL_SetupWindow_detect_exit
 POL_SetupWindow_reboot 
 
 
+# Warning, /windows/command/ also contains a start.exe, so
+# POL_SetupWindow_auto_shortcut can fail
 POL_SetupWindow_make_shortcut "$PREFIX" "Program Files/GOG.com/Outcast/" "start.exe" "${SHORTCUT_NAME}.ICO" "$SHORTCUT_NAME"
 Set_WineVersion_Assign "$WORKING_WINE_VERSION" "$SHORTCUT_NAME"
 
