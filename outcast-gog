@@ -78,7 +78,7 @@ POL_SetupWindow_browse "$LNG_ARCHIVE_LOCATION" "$LNG_SELECT_FILE"
 # Doesn't work?
 #check_install_archive
 
-POL_SetupWindow_install_wine "$WORKING_WINE_VERSION"
+POL_Wine_InstallVersion "$WORKING_WINE_VERSION"
 export WINEVERSION="$WORKING_WINE_VERSION"
 
 
@@ -95,10 +95,10 @@ cat <<'EOF' > $REPERTOIRE/tmp/pdfnativereader.reg
 [HKEY_CLASSES_ROOT\PDFfile\Shell\Open\command]
 @="winebrowser \"%1\""
 EOF
-wine regedit $REPERTOIRE/tmp/pdfnativereader.reg
+POL_Wine regedit $REPERTOIRE/tmp/pdfnativereader.reg
 
 
-wine "$APP_ANSWER" || abort
+POL_Wine "$APP_ANSWER" || abort
 
 # GoG work!
 Set_OS winxp
@@ -119,12 +119,12 @@ REGEDIT4
 [HKEY_CURRENT_USER\Software\Wine\X11 Driver]
 "GrabFullscreen"="Y"
 EOF
-wine regedit $REPERTOIRE/tmp/grabfullscreen.reg
+POL_Wine regedit $REPERTOIRE/tmp/grabfullscreen.reg
 
 POL_SetupWindow_detect_exit
 
 # Doesn't hurt ;)
-POL_SetupWindow_reboot 
+POL_Wine_reboot 
 
 
 # Warning, /windows/command/ also contains a start.exe, so
